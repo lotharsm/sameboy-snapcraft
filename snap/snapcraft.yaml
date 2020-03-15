@@ -93,7 +93,6 @@ parts:
       - libsdl2-2.0-0
       - libstdc++6
       - libunity9
-      - locales-all
 
   desktop-gtk:
     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
@@ -110,7 +109,6 @@ parts:
       - adwaita-icon-theme
       - gnome-themes-standard
       - shared-mime-info
-      - locales-all
       - xdg-user-dirs
       - libcanberra-gtk3-module
       - libgdk-pixbuf2.0-0
