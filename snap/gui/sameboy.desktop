@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=SameBoy
+Comment=A Friendly and Powerful Game Boy Emulator
+Comment[de]=Ein freundlicher und leistungsfähiger Game Boy-Emulator
+Exec=sameboy
+Icon=${SNAP}/meta/gui/sameboy.png
+Terminal=false
+Type=Application
+Categories=Game;
+StartupNotify=true
