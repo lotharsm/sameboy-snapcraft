@@ -74,7 +74,7 @@ parts:
         snapcraftctl set-version $(git -C ../src describe | sed 's/desc\///')
       fi    
       snapcraftctl build
-      CONF=native_release make
+      CONF=release make
       strip build/bin/SDL/sameboy
       cp -r build/bin/SDL/* $SNAPCRAFT_PART_INSTALL/usr/bin/
       
