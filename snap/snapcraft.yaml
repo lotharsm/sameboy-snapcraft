@@ -3,8 +3,8 @@ base: core18
 adopt-info: sameboy
 summary: SameBoy - A Friendly and Powerful Game Boy Emulator
 description: |
-    SameBoy is a user friendly Game Boy, Game Boy Color and Super Game Boy emulator
-    for macOS, Windows and Unix-like platforms.
+    Lior Halphon's SameBoy is a user friendly Game Boy, Game Boy Color and
+    Super Game Boy emulator for macOS, Windows and Unix-like platforms.
     
     SameBoy is extremely accurate and includes a wide range of powerful debugging features,
     making it ideal for both casual players and developers.
