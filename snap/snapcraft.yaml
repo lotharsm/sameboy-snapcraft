@@ -80,6 +80,7 @@ parts:
       
     build-packages:
       - clang
+      - llvm-dev
       - libpng-dev
       - libsdl2-dev
       - libunity-dev
