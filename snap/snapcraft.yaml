@@ -118,8 +118,8 @@ parts:
   gtk-locales:
     plugin: nil
     build-packages:
-    - apt
-    - dpkg
+      - apt
+      - dpkg
     override-pull: |
       set -eux
       apt download "language-pack-gnome-*-base"
