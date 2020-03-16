@@ -43,6 +43,7 @@ apps:
       - joystick
       - audio-playback
       - home
+      - removable-media
 
 parts:
   rgbds:
