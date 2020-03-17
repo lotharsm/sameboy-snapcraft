@@ -1,5 +1,6 @@
 name: sameboy
 base: core18
+license: MIT
 adopt-info: sameboy
 summary: SameBoy - A Friendly and Powerful Game Boy Emulator
 description: |
