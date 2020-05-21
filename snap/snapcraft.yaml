@@ -46,6 +46,9 @@ apps:
       - home
       - removable-media
 
+    environment:
+      DBUS_FATAL_WARNINGS: 0
+
 parts:
   rgbds:
     source: https://github.com/rednex/rgbds.git
