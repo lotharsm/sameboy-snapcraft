@@ -36,6 +36,9 @@ parts:
   rgbds:
     source: https://github.com/rednex/rgbds.git
     plugin: make
+    build-environment:
+      - CXXFLAGS: "$CXXFLAGS -fuse-ld=gold -flto=$(nproc) -ffunction-sections -fdata-sections"
+      - LDFLAGS:  "$LDFLAGS  -fuse-ld=gold -flto=$(nproc) -Wl,--gc-sections"
     override-build: |
       snapcraftctl build
       make install
@@ -46,9 +49,12 @@ parts:
      - byacc
 
   sameboy:
-    after: [rgbds, gtk-locales]
+    after: [rgbds]
     plugin: nil
     source: https://github.com/liji32/sameboy.git
+    build-environment:
+      - CXXFLAGS: "$CXXFLAGS -fuse-ld=gold -flto=$(nproc) -ffunction-sections -fdata-sections"
+      - LDFLAGS:  "$LDFLAGS  -fuse-ld=gold -flto=$(nproc) -Wl,--gc-sections"
     override-build: |
       last_committed_tag="$(git describe --abbrev=0 --tags)"
       trimmed_tag="$(echo $last_committed_tag | sed 's/desc\///' | sed 's/git//' | sed 's/^v//')"
@@ -60,19 +66,19 @@ parts:
         git checkout "${last_committed_tag}"
         snapcraftctl set-version $(git describe --abbrev=0 --tags | sed 's/desc\///' | sed 's/git//' | sed 's/^v//')
       else
-        snapcraftctl set-version "$(git describe --always)"
+        snapcraftctl set-version "$(git describe --always | sed 's/desc\///' | sed 's/git//' | sed 's/^v//')"
       fi    
       snapcraftctl build
-      CONF=release make
+      CONF=release make -j$(nproc)
       strip --strip-all build/bin/SDL/sameboy
       cp -r build/bin/SDL/* $SNAPCRAFT_PART_INSTALL/usr/bin/
       
     build-packages:
-      - clang
-      - llvm-dev
+      - g++
+      - make
       - libpng-dev
       - libsdl2-dev
-      - libunity-dev
+      - locales-all
     stage-packages:
       - libgl1-mesa-dri
       - libgl1-mesa-glx
@@ -80,21 +86,3 @@ parts:
       - libwayland-egl1-mesa
       - libpng16-16
       - libsdl2-2.0-0
-      - libstdc++6
-      - libunity9
-
-  gtk-locales:
-    plugin: nil
-    build-packages:
-      - apt
-      - dpkg
-    override-pull: |
-      set -eux
-      apt download "language-pack-gnome-*-base"
-    override-build: |
-      set -eux
-      for deb in *.deb; do dpkg-deb -x $deb .; done
-      find usr/share/locale-langpack -type f -not -name "gtk20*.mo" -and -not -name "gtk30*.mo" -exec rm '{}' \;
-      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share
-      cp -R usr/share/locale-langpack $SNAPCRAFT_PART_INSTALL/usr/share/
-
