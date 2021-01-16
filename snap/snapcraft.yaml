@@ -15,27 +15,10 @@ description: |
 confinement: strict
 grade: stable
 
-plugs:
-  gtk-3-themes:
-    default-provider: gtk-common-themes:gtk-3-themes
-    interface: content
-    target: $SNAP/data-dir/themes
-  sound-themes:
-    default-provider: gtk-common-themes:sound-themes
-    interface: content
-    target: $SNAP/data-dir/sounds
-  gnome-3-28-1804:
-    default-provider: gnome-3-28-1804:gnome-3-28-1804
-    interface: content
-    target: $SNAP/gnome-platform
-  icon-themes:
-    default-provider: gtk-common-themes:icon-themes
-    interface: content
-    target: $SNAP/data-dir/icons
-
 apps:
   sameboy:
     command: desktop-launch $SNAP/usr/bin/sameboy
+    extensions: [gnome-3-28]
     plugs:
       - x11
       - wayland
@@ -59,10 +42,11 @@ parts:
     build-packages:
      - g++
      - make
+     - bison
      - byacc
 
   sameboy:
-    after: [rgbds, desktop-gtk, gtk-locales]
+    after: [rgbds, gtk-locales]
     plugin: nil
     source: https://github.com/liji32/sameboy.git
     override-build: |
@@ -74,13 +58,13 @@ parts:
       if [ "${trimmed_tag}" != "${last_released_tag}" ]; then
         git fetch
         git checkout "${last_committed_tag}"
-        snapcraftctl set-version $(git -C ../src describe --abbrev=0 --tags | sed 's/desc\///' | sed 's/git//' | sed 's/^v//')
+        snapcraftctl set-version $(git describe --abbrev=0 --tags | sed 's/desc\///' | sed 's/git//' | sed 's/^v//')
       else
-        snapcraftctl set-version $(git -C ../src describe | sed 's/desc\///')
+        snapcraftctl set-version "git+$(git describe --always)"
       fi    
       snapcraftctl build
       CONF=release make
-      strip build/bin/SDL/sameboy
+      strip --strip-all build/bin/SDL/sameboy
       cp -r build/bin/SDL/* $SNAPCRAFT_PART_INSTALL/usr/bin/
       
     build-packages:
@@ -98,25 +82,6 @@ parts:
       - libsdl2-2.0-0
       - libstdc++6
       - libunity9
-
-  desktop-gtk:
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-subdir: gtk
-    plugin: make
-    build-packages:
-      - build-essential
-
-    stage-packages:
-      - libxkbcommon0
-      - ttf-ubuntu-font-family
-      - dmz-cursor-theme
-      - light-themes
-      - adwaita-icon-theme
-      - gnome-themes-standard
-      - shared-mime-info
-      - xdg-user-dirs
-      - libcanberra-gtk3-module
-      - libgdk-pixbuf2.0-0
 
   gtk-locales:
     plugin: nil
