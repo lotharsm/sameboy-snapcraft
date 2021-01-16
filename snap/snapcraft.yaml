@@ -60,7 +60,7 @@ parts:
         git checkout "${last_committed_tag}"
         snapcraftctl set-version $(git describe --abbrev=0 --tags | sed 's/desc\///' | sed 's/git//' | sed 's/^v//')
       else
-        snapcraftctl set-version "git+$(git describe --always)"
+        snapcraftctl set-version "$(git describe --always)"
       fi    
       snapcraftctl build
       CONF=release make
