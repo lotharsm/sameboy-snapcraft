@@ -14,6 +14,7 @@ description: |
     one would expect from an emulator – from save states to scaling filters.
 confinement: strict
 grade: stable
+compression: lzo
 
 apps:
   sameboy:
