@@ -33,6 +33,10 @@ apps:
     environment:
       DBUS_FATAL_WARNINGS: 0
 
+layout:
+  /usr/share/libdrm:
+    bind: $SNAP/usr/share/libdrm
+
 parts:
   rgbds:
     source: https://github.com/rednex/rgbds.git
