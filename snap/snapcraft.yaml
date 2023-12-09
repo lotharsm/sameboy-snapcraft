@@ -1,5 +1,5 @@
 name: sameboy
-base: core18
+base: core20
 license: MIT
 adopt-info: sameboy
 summary: SameBoy - A Friendly and Powerful Game Boy Emulator
@@ -18,8 +18,8 @@ compression: lzo
 
 apps:
   sameboy:
-    command: desktop-launch $SNAP/usr/bin/sameboy
-    extensions: [gnome-3-28]
+    command: usr/bin/sameboy
+    extensions: [gnome-3-38]
     plugs:
       - x11
       - wayland
