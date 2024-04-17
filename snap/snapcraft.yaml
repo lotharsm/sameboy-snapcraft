@@ -45,7 +45,6 @@ parts:
       - CXXFLAGS: "$CXXFLAGS -fuse-ld=gold -flto=$(nproc) -ffunction-sections -fdata-sections"
       - LDFLAGS:  "$LDFLAGS  -fuse-ld=gold -flto=$(nproc) -Wl,--gc-sections"
     override-build: |
-      git checkout v0.7.0
       snapcraftctl build
       make install
     build-packages:
